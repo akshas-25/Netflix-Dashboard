@@ -13,6 +13,7 @@ import pandas as pd
 from pymongo import MongoClient, ASCENDING
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 import streamlit as st
+import certifi
 
 # ---------------------------------------------------------------------------
 # Load environment variables from .env file
@@ -45,6 +46,7 @@ def get_mongo_client():
     try:
         client = MongoClient(
             MONGO_URI,
+            tlsCAFile=certifi.where(),
             serverSelectionTimeoutMS=10000,  # 10 seconds — Atlas can be slightly slower than local
             tls=True,                        # Atlas always requires TLS/SSL
         )
